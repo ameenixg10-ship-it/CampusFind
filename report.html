@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Report item | CampusFind{% endblock %}
+{% block content %}
+<main class="form-wrap">
+  <a href="{{ url_for('home') }}" class="back">← Back to board</a>
+  <p class="eyebrow">COMMUNITY REPORT</p>
+  <h1>Report a {{ item_type.lower() }} item</h1>
+  <p class="muted">Share enough detail to help the right person identify it.</p>
+  <form class="panel" method="post">
+    <label>Item name *<input name="title" required placeholder="e.g. Black wireless earbuds"></label>
+    <label>Category *
+      <select name="category" required><option value="">Choose category</option><option>Electronics</option><option>ID / Documents</option><option>Wallet / Bag</option><option>Books / Stationery</option><option>Keys</option><option>Clothing</option><option>Other</option></select>
+    </label>
+    <label>Description<textarea name="description" rows="4" placeholder="Color, brand, identifying marks..."></textarea></label>
+    <div class="two">
+      <label>Location *<input name="location" required placeholder="e.g. Main library"></label>
+      <label>Date<input type="date" name="incident_date"></label>
+    </div>
+    <div class="two">
+      <label>Your name *<input name="contact_name" required></label>
+      <label>Contact email *<input type="email" name="contact_email" required></label>
+    </div>
+    <button class="btn primary full">Submit report</button>
+  </form>
+</main>
+{% endblock %}

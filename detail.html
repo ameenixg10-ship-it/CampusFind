@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Item details | CampusFind{% endblock %}
+{% block content %}
+<main class="form-wrap">
+  <a href="{{ url_for('home') }}" class="back">← Back to board</a>
+  <section class="panel">
+    <span class="tag">{{ item.item_type }} ITEM</span><span class="status">{{ item.status }}</span>
+    <h1>{{ item.title }}</h1><p class="muted">{{ item.category }}</p>
+    <p>{{ item.description or "No additional description provided." }}</p>
+    <p>📍 <b>{{ item.location }}</b></p>
+    <p>Reported by <b>{{ item.contact_name }}</b> · {{ item.contact_email }}</p>
+  </section>
+  <section class="panel">
+    <h2>Claim this item</h2><p class="muted">If you believe this item belongs to you, submit a claim for admin review.</p>
+    <form action="{{ url_for('submit_claim', item_id=item.id) }}" method="post">
+      <label>Your name *<input name="claimant_name" required></label>
+      <label>Your email *<input name="claimant_email" type="email" required></label>
+      <label>Proof / identifying details<textarea name="details" rows="3" placeholder="Describe a detail only the owner would know."></textarea></label>
+      <button class="btn primary full" {% if item.status != 'OPEN' %}disabled{% endif %}>Send claim request</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

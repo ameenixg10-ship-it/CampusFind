@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin | CampusFind{% endblock %}
+{% block content %}
+<main class="wrap">
+  <p class="eyebrow">CONTROL CENTER</p><h1>Admin dashboard</h1>
+  <p class="muted">Demo admin view. Add authentication before using this beyond local testing.</p>
+  <section class="panel">
+    <h2>Claim requests</h2>
+    <div class="table-wrap"><table><thead><tr><th>Item</th><th>Claimant</th><th>Contact</th><th>Details</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    {% for claim in claims %}<tr><td>{{ claim.item_title }}</td><td>{{ claim.claimant_name }}</td><td>{{ claim.claimant_email }}</td><td>{{ claim.details }}</td><td>{{ claim.status }}</td><td>
+      <form class="inline" action="{{ url_for('update_claim', claim_id=claim.id, decision='APPROVED') }}" method="post"><button class="small-btn">Approve</button></form>
+      <form class="inline" action="{{ url_for('update_claim', claim_id=claim.id, decision='REJECTED') }}" method="post"><button class="small-btn danger">Reject</button></form>
+    </td></tr>{% else %}<tr><td colspan="6">No claims yet.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </section>
+  <section class="panel">
+    <h2>All reported items</h2>
+    <div class="table-wrap"><table><thead><tr><th>Item</th><th>Type</th><th>Location</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    {% for item in items %}<tr><td>{{ item.title }}</td><td>{{ item.item_type }}</td><td>{{ item.location }}</td><td>{{ item.status }}</td><td><form action="{{ url_for('resolve_item', item_id=item.id) }}" method="post"><button class="small-btn">Mark resolved</button></form></td></tr>{% else %}<tr><td colspan="5">No reports yet.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </section>
+</main>
+{% endblock %}
